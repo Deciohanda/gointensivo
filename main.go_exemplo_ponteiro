@@ -1,0 +1,24 @@
+// variaveis declaradas e não utilizadas - geram erro
+// pacotes importados e não utilizados também geram erro
+package main
+
+import "fmt"
+
+func main() {
+	// a e b são independentes, ocupam espaço distinto na memória
+	// a := 10
+	// b := a
+	// fmt.Println(a, b)
+	// b = 20
+	// fmt.Println(a, b)
+
+	//a e b ocupam o mesmo espaço em memória, b é uma referência de a
+	a := 10
+	b := &a               //&referência
+	fmt.Println(a, b, *b) //* busca o valor armazenado na memória
+	a = 20
+	fmt.Println(a, b, *b)
+	*b = 20
+	fmt.Println(a, b, *b)
+
+}

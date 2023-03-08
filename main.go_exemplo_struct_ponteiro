@@ -1,0 +1,64 @@
+// variaveis declaradas e não utilizadas - geram erro
+// pacotes importados e não utilizados também geram erro
+package main
+
+import "fmt"
+
+type Order struct {
+	ID       string
+	Price    float64
+	Quantity int
+}
+
+// desta forma, o valor não é atualizado
+// func (o Order) setPrice(price float64) {
+// 	o.Price = price
+// 	fmt.Println("Price dentro do setPrice: ", o.Price)
+// }
+func (o *Order) SetPrice(price float64) {
+	o.Price = price
+	fmt.Println("Price dentro do setPrice: ", o.Price)
+}
+
+func (o Order) getTotal() float64 {
+	return o.Price * float64(o.Quantity)
+}
+
+func NewOrder() *Order {
+	return &Order{}
+}
+
+func main() {
+	//a := 10
+	// b := 20
+
+	// if a > b {
+	// 	println("a > b")
+	// } else if a < b {
+	// 	println("a < b")
+	// } else {
+	// 	println("a == b")
+	// }
+	// println("teste")
+	// order := Order{
+	// 	ID:       "123",
+	// 	Price:    10.0,
+	// 	Quantity: 5,
+	// }
+
+	// fmt.Println(order.ID, order.Price, order.Quantity)
+	// fmt.Println(order.getTotal())
+
+	// order.setPrice(20.0)
+	// fmt.Println(order.getTotal())
+
+	order := NewOrder()
+	order.ID = "123"
+	order.Quantity = 10
+	order.Price = 10.0
+
+	order2 := order
+	order.Price = 5.0
+	fmt.Println(order.Price, order2.Price)
+	fmt.Println(order, order2)
+}
