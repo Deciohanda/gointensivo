@@ -1,0 +1,66 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func task(name string) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(name, ":", i)
+		time.Sleep(time.Second)
+	}
+}
+
+// processamento serial
+// func main() {
+// 	task("Tarefa 1")
+// 	task("Tarefa 2")
+// 	task("Tarefa 3")
+// }
+
+// // processamento multithread
+// // thread 1
+// func main() {
+// 	go task("Tarefa 1") // thread 2
+// 	go task("Tarefa 2") // thread 3
+// 	task("Tarefa 3")    // thread 1 -- não pode ter o go task, pois nesse caso não haveria nada segurando o processo no ar
+// }
+
+// processamento multithread sem compartilhamento de memória - utilizando canal de comunicação entre as threads
+// thread 1
+// func main() {
+// 	canal := make(chan string)
+
+// 	//thread 2
+// 	go func() {
+// 		canal <- "Olá mundo!"
+// 		canal <- "Olá mundo 2!"
+// 	}()
+
+// 	// T1
+// 	fmt.Println(<-canal)
+// 	fmt.Println(<-canal)
+// }
+
+// thread 1
+func main() {
+	canal := make(chan int) //canal de comunicação enre as threads
+	go publish(canal)       // thread 2
+	go reader(canal)        // thread 3
+	time.Sleep(time.Second * 5)
+
+}
+
+func reader(canal chan int) {
+	for x := range canal {
+		fmt.Println(x)
+	}
+}
+
+func publish(ch chan int) {
+	for i := 0; i < 10; i++ {
+		ch <- i
+	}
+	close(ch)
+}
