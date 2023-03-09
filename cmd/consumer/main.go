@@ -9,6 +9,9 @@ import (
 	"github.com/Deciohanda/gointensivo/internal/usecase"
 	"github.com/Deciohanda/gointensivo/pkg/kafka"
 	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+
+	//sqlite3 driver
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -25,6 +28,7 @@ func main() {
 
 	topics := []string{"orders"}
 	servers := "host.docker.internal:9094"
+	fmt.Println("kafka consumer has started")
 	go kafka.Consume(topics, servers, msgChanKafka)
 	kafkaWorker(msgChanKafka, usecase)
 }
